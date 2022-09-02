@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-//todo 1 (finish)
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -21,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
 
   final _loginFormKey = GlobalKey<FormState>();
 
-  //todo 6
   late AuthenticationProvider _auth;
   late NavigatorServices _navigator;
   String email = '';
@@ -32,7 +29,6 @@ class _LoginPageState extends State<LoginPage> {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
 
-    //todo 7
     _auth = Provider.of<AuthenticationProvider>(context);
     _navigator = GetIt.instance.get<NavigatorServices>();
 
@@ -120,7 +116,6 @@ class _LoginPageState extends State<LoginPage> {
       height: _deviceHeight * 0.065,
       width: _deviceHeight * 0.65,
       onPressed: () {
-        //todo 10 (finish)
         if(_loginFormKey.currentState!.validate()){
           _loginFormKey.currentState?.save();
           print('Email : $email, password : $password');

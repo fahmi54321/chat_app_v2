@@ -31,7 +31,7 @@ class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MultiProvider( //todo 1 (next authentication_provider)
+    return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
           value: AuthenticationProvider(),
