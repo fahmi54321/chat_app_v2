@@ -1,9 +1,11 @@
 import 'package:chat_app/pages/login_page.dart';
 import 'package:chat_app/pages/splash_page.dart';
+import 'package:chat_app/providers/authentication_provider.dart';
 import 'package:chat_app/services/navigation_services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
   runApp(const MyApp());
 }
 
@@ -18,26 +20,30 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashPage(onInitializationComplete: (){
-        runApp(MainApp()); //todo 4 (finish)
+      home: SplashPage(onInitializationComplete: () {
+        runApp(const MainApp());
       }),
     );
   }
 }
 
-// todo 3
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: NavigatorServices.navigatorKey,
-      initialRoute: '/login',
-      routes: {
-        '/login' : (BuildContext _context) => LoginPage(),
-      },
+    return MultiProvider( //todo 1 (next authentication_provider)
+      providers: [
+        ChangeNotifierProvider.value(
+          value: AuthenticationProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        navigatorKey: NavigatorServices.navigatorKey,
+        initialRoute: '/login',
+        routes: {
+          '/login': (BuildContext _context) => LoginPage(),
+        },
+      ),
     );
   }
 }
-
