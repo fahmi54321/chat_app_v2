@@ -1,3 +1,4 @@
+import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/pages/login_page.dart';
 import 'package:chat_app/pages/splash_page.dart';
 import 'package:chat_app/providers/authentication_provider.dart';
@@ -41,7 +42,8 @@ class MainApp extends StatelessWidget {
         navigatorKey: NavigatorServices.navigatorKey,
         initialRoute: '/login',
         routes: {
-          '/login': (BuildContext _context) => LoginPage(),
+          '/login': (BuildContext context) => LoginPage(),
+          '/home': (BuildContext context) => HomePage(),
         },
       ),
     );
