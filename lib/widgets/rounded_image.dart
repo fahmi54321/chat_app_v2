@@ -35,7 +35,12 @@ class RoundedImageNetwork extends StatelessWidget {
 class RoundedImageFile extends StatelessWidget {
   PlatformFile image;
   double size;
-  RoundedImageFile({Key? key,required this.image,required this.size,}) : super(key: key);
+
+  RoundedImageFile({
+    Key? key,
+    required this.image,
+    required this.size,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,7 @@ class RoundedImageFile extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: FileImage(File(image.path??'')),
+          image: FileImage(File(image.path ?? '')),
         ),
         borderRadius: BorderRadius.all(
           Radius.circular(size),
@@ -56,3 +61,36 @@ class RoundedImageFile extends StatelessWidget {
   }
 }
 
+class RoundedImageNetworkWithStatusIndicator extends RoundedImageNetwork {
+  final bool isActive;
+
+  RoundedImageNetworkWithStatusIndicator({
+    Key? key,
+    required this.isActive,
+    required String imagePath,
+    required double size,
+  }) : super(
+          key: key,
+          imagePath: imagePath,
+          size: size,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.bottomRight,
+      children: [
+        super.build(context),
+        Container(
+          height: size * 0.20,
+          width: size * 0.20,
+          decoration: BoxDecoration(
+            color: isActive ? Colors.green : Colors.red,
+            borderRadius: BorderRadius.circular(size),
+          ),
+        ),
+      ],
+    );
+  }
+}
