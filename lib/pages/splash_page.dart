@@ -40,14 +40,12 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 
-  //todo 1 (inisial firebase)
   Future<void> _setup() async{
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
     _registerServices();
   }
 
-  //todo 2 register service yang dibutuhkan (next main)
   void _registerServices(){
     GetIt.instance.registerSingleton<NavigatorServices>(NavigatorServices());
     GetIt.instance.registerSingleton<MediaService>(MediaService());

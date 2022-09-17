@@ -11,12 +11,31 @@ class DatabaseServices {
 
   DatabaseServices() {}
 
-  //todo 1
+  //todo 3 (next authentication_provider)
+  Future<void> createUser(
+    String uid,
+    String email,
+    String name,
+    String imageUrl,
+  ) async {
+
+    try{
+      await _db.collection(USER_COLLECTION).doc(uid).set({
+        'email' : email,
+        'image' : imageUrl,
+        'last_active' : DateTime.now().toUtc(),
+        'name' : name,
+      });
+    }catch(e){
+      print(e);
+    }
+
+  }
+
   Future<DocumentSnapshot> getUser(String uid) {
     return _db.collection(USER_COLLECTION).doc(uid).get();
   }
 
-  //todo 2 (next authentication_provider)
   Future<void> updateUserLastSeenTime(String uid) async {
     try {
       await _db.collection(USER_COLLECTION).doc(uid).update(

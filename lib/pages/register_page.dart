@@ -1,13 +1,15 @@
+import 'package:chat_app/providers/authentication_provider.dart';
+import 'package:chat_app/services/cloud_storage_services.dart';
+import 'package:chat_app/services/database_services.dart';
 import 'package:chat_app/services/media_services.dart';
+import 'package:chat_app/services/navigation_services.dart';
 import 'package:chat_app/widgets/custom_input_fields.dart';
 import 'package:chat_app/widgets/rounded_button.dart';
 import 'package:chat_app/widgets/rounded_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
-
-//todo 1 (finish)
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -27,10 +29,22 @@ class _RegisterPageState extends State<RegisterPage> {
   String email = '';
   String password = '';
 
+  //todo 5
+  late AuthenticationProvider _auth;
+  late DatabaseServices _db;
+  late CloudStorageServices _cloudStorageServices;
+  late NavigatorServices _navigation;
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
+
+    //todo 6
+    _auth = Provider.of<AuthenticationProvider>(context);
+    _db = GetIt.instance.get<DatabaseServices>();
+    _cloudStorageServices = GetIt.instance.get<CloudStorageServices>();
+    _navigation = GetIt.instance.get<NavigatorServices>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -84,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _registerForm() {
-    return Container(
+    return SizedBox(
       height: _deviceHeight * 0.35,
       child: Form(
         key: _registerFormKey,
@@ -99,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   name = value;
                 });
               },
-              regEx: 'r.{8,}',
+              regEx: r".{8,}",
               hintText: 'Name',
               obscureText: false,
             ),
@@ -108,6 +122,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 setState(() {
                   email = value;
                 });
+
+                print(value);
               },
               regEx:
                   r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$",
@@ -120,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   password = value;
                 });
               },
-              regEx: 'r.{8,}',
+              regEx: r".{8,}",
               hintText: 'Password',
               obscureText: true,
             ),
@@ -135,7 +151,36 @@ class _RegisterPageState extends State<RegisterPage> {
       name: 'Register',
       height: _deviceHeight * 0.065,
       width: _deviceWidth * 0.65,
-      onPressed: () async {},
+      onPressed: () async {
+
+        //todo 7 (finish)
+
+        if (_registerFormKey.currentState!.validate() && profileImage != null) {
+          _registerFormKey.currentState?.save();
+          String? uid = await _auth.registerUserUsingEmailAndPassword(
+            email,
+            password,
+          );
+
+          // print('uid : $uid}');
+
+          String? imageUrl = await _cloudStorageServices.saveUserImageToStorage(
+            uid ?? "",
+            profileImage!,
+          );
+
+          await _db.createUser(
+            uid ?? '',
+            email,
+            name,
+            imageUrl ?? "",
+          );
+
+          await _auth.logout();
+          await _auth.loginUsingEmailAndPassword(email, password);
+
+        }
+      },
     );
   }
 }
