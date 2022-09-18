@@ -24,11 +24,13 @@ class CustomListViewTiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print('activity : $isActivity');
+
     return ListTile(
       title: Text(
         title,
         style: TextStyle(
-          color: Colors.white,
           fontSize: 18,
           fontWeight: FontWeight.w500,
         ),
@@ -38,22 +40,22 @@ class CustomListViewTiles extends StatelessWidget {
       leading: RoundedImageNetworkWithStatusIndicator(
         size: height / 2,
         imagePath: imagePath,
-        isActive: isActivity,
+        isActive: isActive,
       ),
-      subtitle: isActivity ? Row(
+      subtitle: isActivity == true ? Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SpinKitThreeBounce(
-            color: Colors.white54,
+            color: Colors.black54,
             size: height * 0.10,
           )
         ],
       ) : Text(
         subtitle,
         style: TextStyle(
-          color: Colors.white54,
+          color: Colors.black54,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),

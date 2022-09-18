@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-//todo 2 (next chat)
-
 enum MessageType {
   TEXT,
   IMAGE,

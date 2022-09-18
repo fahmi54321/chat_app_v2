@@ -2,8 +2,6 @@ import 'package:chat_app/models/chat_messages.dart';
 import 'package:chat_app/models/chat_user.dart';
 
 
-//todo 3 (finish)
-
 class Chat {
   final String uid;
   final String currentUserUid;
