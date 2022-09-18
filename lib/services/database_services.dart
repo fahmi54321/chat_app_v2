@@ -45,7 +45,6 @@ class DatabaseServices {
     }
   }
 
-  //todo 1
   Stream<QuerySnapshot> getChatsForUser(String uid) {
     return _db
         .collection(CHAT_COLLECTION)
@@ -53,7 +52,6 @@ class DatabaseServices {
         .snapshots();
   }
 
-  //todo 2 (chat_page_provider)
   Future<QuerySnapshot> getLastMessageForChat(String chatId) {
     return _db
         .collection(CHAT_COLLECTION)

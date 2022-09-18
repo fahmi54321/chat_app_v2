@@ -1,11 +1,14 @@
 import 'package:chat_app/models/chat.dart';
 import 'package:chat_app/models/chat_messages.dart';
 import 'package:chat_app/models/chat_user.dart';
+import 'package:chat_app/pages/chat_page.dart';
 import 'package:chat_app/providers/authentication_provider.dart';
 import 'package:chat_app/providers/chat_page_provider.dart';
+import 'package:chat_app/services/navigation_services.dart';
 import 'package:chat_app/widgets/custom_list_view_tiles.dart';
 import 'package:chat_app/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class ChatsPage extends StatefulWidget {
@@ -16,19 +19,20 @@ class ChatsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<ChatsPage> {
-
   late double _deviceHeight;
   late double _deviceWidth;
   late AuthenticationProvider _auth;
-  late ChatPageProvider _pageProvider; //todo 4
+  late ChatPageProvider _pageProvider;
+  late NavigatorServices _navigator;
 
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
-    _auth = Provider.of<AuthenticationProvider>(context); // todo 5
+    _auth = Provider.of<AuthenticationProvider>(context);
+    _navigator = GetIt.instance.get<NavigatorServices>();
 
-    return MultiProvider( //todo 6
+    return MultiProvider(
       providers: [
         ChangeNotifierProvider<ChatPageProvider>(
           create: (_) => ChatPageProvider(auth: _auth),
@@ -72,7 +76,6 @@ class _ChatsPageState extends State<ChatsPage> {
     );
   }
 
-  //todo 7
   Widget _chatList() {
     List<Chat> chats = _pageProvider.chats;
 
@@ -116,11 +119,15 @@ class _ChatsPageState extends State<ChatsPage> {
     return CustomListViewTiles(
       height: _deviceHeight * 0.10,
       title: chat.title(),
-      subtitle:subtitleText,
+      subtitle: subtitleText,
       imagePath: chat.imageURL(),
       isActivity: chat.activity,
       isActive: isActive,
-      onTap: () {},
+      onTap: () {
+        _navigator.navigateToPage(
+          Chatpage(chat: chat),
+        );
+      },
     );
   }
 }

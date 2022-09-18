@@ -25,7 +25,6 @@ class CustomListViewTiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print('activity : $isActivity');
 
     return ListTile(
       title: Text(

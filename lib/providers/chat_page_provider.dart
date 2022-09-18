@@ -26,7 +26,6 @@ class ChatPageProvider extends ChangeNotifier {
     super.dispose();
   }
 
-  //todo 3 (next chats_page)
   void getChats() async {
     try {
       _chatsStream = _db.getChatsForUser(auth.chatUser?.uid ?? '').listen(
