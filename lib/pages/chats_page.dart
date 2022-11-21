@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chat_app/models/chat.dart';
 import 'package:chat_app/models/chat_messages.dart';
 import 'package:chat_app/models/chat_user.dart';
@@ -124,6 +126,7 @@ class _ChatsPageState extends State<ChatsPage> {
       isActivity: chat.activity,
       isActive: isActive,
       onTap: () {
+        log('klik');
         _navigator.navigateToPage(
           Chatpage(chat: chat),
         );

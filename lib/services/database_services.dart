@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chat_app/models/chat_messages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 const String USER_COLLECTION = 'Users';
@@ -45,10 +46,53 @@ class DatabaseServices {
     }
   }
 
+  //todo 2
+  Future<void> deleteChat(String chatId) async {
+    try {
+      await _db.collection(CHAT_COLLECTION).doc(chatId).delete();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //todo 3
+  Future<void> addMessageToChat(String chatId, ChatMessage message) async {
+    try {
+      await _db
+          .collection(CHAT_COLLECTION)
+          .doc(chatId)
+          .collection(MESSAGE_COLLECTION)
+          .add(
+            message.toJson(),
+          );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // todo 4 (next chat_page_provider.dart)
+  Future<void> updateChatData(String chatId, Map<String, dynamic> data) async {
+    try {
+      await _db.collection(CHAT_COLLECTION).doc(chatId).update(data);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Stream<QuerySnapshot> getChatsForUser(String uid) {
     return _db
         .collection(CHAT_COLLECTION)
         .where('members', arrayContains: uid)
+        .snapshots();
+  }
+
+  //todo 1
+  Stream<QuerySnapshot> streamMessageForChat(String chatId) {
+    return _db
+        .collection(CHAT_COLLECTION)
+        .doc(chatId)
+        .collection(MESSAGE_COLLECTION)
+        .orderBy('sent_time', descending: false)
         .snapshots();
   }
 

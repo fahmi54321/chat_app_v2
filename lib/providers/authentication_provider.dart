@@ -50,6 +50,7 @@ class AuthenticationProvider extends ChangeNotifier {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       print(_auth.currentUser);
+      _navigatorServices.navigateToRoute('/home');
     } on FirebaseAuthException {
       print('error logging user into firebase');
     } catch (e) {
