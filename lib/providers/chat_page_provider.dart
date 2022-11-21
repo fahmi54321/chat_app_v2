@@ -27,7 +27,7 @@ class ChatPageProvider extends ChangeNotifier {
   List<ChatMessage> messages = [];
   String _message = '';
   String get message => _message;
-  set message(String value) => message = value;
+  set message(String value) => _message = value;
   late StreamSubscription _messagesStream;
   late StreamSubscription _keyboardVisibilityStream;
   late KeyboardVisibilityController _keyboardVisibilityController;
