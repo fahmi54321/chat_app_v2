@@ -3,7 +3,7 @@ import 'package:chat_app/models/chat_messages.dart';
 import 'package:chat_app/models/chat_user.dart';
 import 'package:chat_app/pages/chat_page.dart';
 import 'package:chat_app/providers/authentication_provider.dart';
-import 'package:chat_app/providers/chat_page_provider.dart';
+import 'package:chat_app/providers/chats_page_provider.dart';
 import 'package:chat_app/services/navigation_services.dart';
 import 'package:chat_app/widgets/custom_list_view_tiles.dart';
 import 'package:chat_app/widgets/top_bar.dart';
@@ -22,7 +22,7 @@ class _ChatsPageState extends State<ChatsPage> {
   late double _deviceHeight;
   late double _deviceWidth;
   late AuthenticationProvider _auth;
-  late ChatPageProvider _pageProvider;
+  late ChatsPageProvider _pageProvider;
   late NavigatorServices _navigator;
 
   @override
@@ -34,12 +34,12 @@ class _ChatsPageState extends State<ChatsPage> {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ChatPageProvider>(
-          create: (_) => ChatPageProvider(auth: _auth),
+        ChangeNotifierProvider<ChatsPageProvider>(
+          create: (_) => ChatsPageProvider(auth: _auth),
         ),
       ],
       child: Builder(builder: (context) {
-        _pageProvider = context.watch<ChatPageProvider>();
+        _pageProvider = context.watch<ChatsPageProvider>();
 
         return Container(
           padding: EdgeInsets.symmetric(

@@ -9,13 +9,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class ChatPageProvider extends ChangeNotifier {
+class ChatsPageProvider extends ChangeNotifier {
   AuthenticationProvider auth;
   late DatabaseServices _db;
   List<Chat> chats = [];
   late StreamSubscription _chatsStream;
 
-  ChatPageProvider({required this.auth}) {
+  ChatsPageProvider({required this.auth}) {
     _db = GetIt.instance.get<DatabaseServices>();
     getChats();
   }
@@ -56,12 +56,12 @@ class ChatPageProvider extends ChangeNotifier {
                   dataSnapshot.id,
                 );
 
-                if(chatMessages.docs.isNotEmpty){
-                  Map<String,dynamic> messageData = chatMessages.docs.first.data() as Map<String,dynamic>;
+                if (chatMessages.docs.isNotEmpty) {
+                  Map<String, dynamic> messageData =
+                      chatMessages.docs.first.data() as Map<String, dynamic>;
 
                   ChatMessage msg = ChatMessage.fromJSON(messageData);
                   messages.add(msg);
-
                 }
 
                 return Chat(
